@@ -9,10 +9,22 @@ defmodule DashboardExperimentWeb.WebhookController do
 
   defp validate_github_token(conn, _) do
     # IO.inspect(conn.req_headers)
-    # conn
-    # |> get_req_header('x_hub_signature')
+    digest = conn
+    |> get_req_header('x-hub-signature')
+    |> String.replace_leading("sha1=", "")
 
+    verification = :crypto.hmac(:sha1, System.get_env("GITHUB_WEBHOOK_SECRET"), Plug.Conn.read_body(conn))
+    |> Base.encode16
+    |> String.downcase
 
-    conn
+    if digest == verification do
+      conn
+    else
+      conn |> send_resp(401, "Unauthorized") |> halt
+    end
   end
 end
+
+
+# :crypto.hmac(:sha256, "key", "The quick brown fox jumps over the lazy dog")
+# |> Base.encode16

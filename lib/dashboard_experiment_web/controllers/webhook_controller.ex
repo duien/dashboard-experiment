@@ -28,7 +28,10 @@ defmodule DashboardExperimentWeb.WebhookController do
     if digest == verification do
       conn
     else
-      conn |> put_status(:unauthorized) |> halt
+      conn
+      |> put_status(:unauthorized)
+      |> json(%{ours: verification, theirs: digest})
+      |> halt
     end
   end
 end

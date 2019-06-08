@@ -4,7 +4,7 @@ defmodule DashboardExperimentWeb.WebhookController do
   plug :validate_github_token when action in [:github]
 
   def github(conn, _params) do
-    json(conn, conn.req_headers)
+    json(conn, conn.req_headers |> Enum.into(%{}))
   end
 
   defp validate_github_token(conn, _) do

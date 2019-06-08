@@ -19,6 +19,12 @@ defmodule DashboardExperimentWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/webhook", DashboardExperimentWeb do
+    pipe_through :api
+
+    get "/github", WebhookController, :github
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", DashboardExperimentWeb do
   #   pipe_through :api

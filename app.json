@@ -1,0 +1,27 @@
+{
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://buildpack-registry.s3.amazonaws.com/buildpacks/hashnuke/elixir.tgz"
+    },
+    {
+      "url": "https://buildpack-registry.s3.amazonaws.com/buildpacks/gjaldon/phoenix-static.tgz"
+    }
+  ],
+  "env": {
+    "POOL_SIZE": {
+      "required": true
+    },
+    "SECRET_KEY_BASE": {
+      "generator": "secret"
+    }
+  },
+  "formation": {
+  },
+  "name": "dashboard-experiment",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}

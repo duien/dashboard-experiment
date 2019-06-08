@@ -1,6 +1,7 @@
 use Mix.Config
 
-config :dashboard_experiment, github_webhook_secret: "fake secret"
+config :dashboard_experiment, DashboardExperimentWeb.Plugs.VerifyHubSignature,
+  github_webhook_secret: "fake secret"
 
 # Configure your database
 config :dashboard_experiment, DashboardExperiment.Repo,

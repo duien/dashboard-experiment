@@ -26,10 +26,13 @@ defmodule DashboardExperimentWeb.Endpoint do
   plug Plug.RequestId
   plug Plug.Logger
 
+  plug DashboardExperimentWeb.Plug.VerifyHubSignature,
+    path: "/webhook/github"
+
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
-    body_reader: {CacheBodyReader, :read_body, []},
+    # body_reader: {CacheBodyReader, :read_body, []},
     json_decoder: Phoenix.json_library()
 
   plug Plug.MethodOverride

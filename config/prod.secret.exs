@@ -12,12 +12,21 @@ database_url =
     For example: ecto://USER:PASS@HOST/DATABASE
     """
 
-config :dashboard_experiment, github_webhook_secret: System.get_env("GITHUB_WEBHOOK_SECRET")
-
 config :dashboard_experiment, DashboardExperiment.Repo,
   ssl: true,
   url: database_url,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+
+github_webhook_secret =
+  System.get_env("GITHUB_WEBHOOK_SECRET") ||
+  raise """
+  environment variable GITHUB_WEBHOOK_SECRET is missing.
+  You can generate one by calling: mix phx.gen.secret
+  """
+
+config :dashboard_experiment, DashboardExperimentWeb.Plugs.VerifyHubSignature,
+  github_webhook_secret: github_webhook_secret
+
 
 secret_key_base =
   System.get_env("SECRET_KEY_BASE") ||

@@ -12,6 +12,8 @@ database_url =
     For example: ecto://USER:PASS@HOST/DATABASE
     """
 
+config :dashboard_experiment, github_webhook_secret: System.get_env("GITHUB_WEBHOOK_SECRET")
+
 config :dashboard_experiment, DashboardExperiment.Repo,
   ssl: true,
   url: database_url,

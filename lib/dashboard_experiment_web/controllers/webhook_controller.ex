@@ -17,11 +17,11 @@ defmodule DashboardExperimentWeb.WebhookController do
     Application.get_env(:dashboard_experiment, :github_webhook_secret)
     |> IO.inspect
 
-    {:ok, body, _conn} = Plug.Conn.read_body(conn)
+    # {:ok, body, _conn} = Plug.Conn.read_body(conn)
 
-    IO.inspect(body)
+    # IO.inspect(body)
 
-    verification = :crypto.hmac(:sha, Application.get_env(:dashboard_experiment, :github_webhook_secret), body)
+    verification = :crypto.hmac(:sha, Application.get_env(:dashboard_experiment, :github_webhook_secret), conn.assigns[:raw_body])
     |> Base.encode16
     |> String.downcase
 

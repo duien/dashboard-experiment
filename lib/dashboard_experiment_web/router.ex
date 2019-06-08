@@ -22,7 +22,7 @@ defmodule DashboardExperimentWeb.Router do
   scope "/webhook", DashboardExperimentWeb do
     pipe_through :api
 
-    get "/github", WebhookController, :github
+    post "/github", WebhookController, :github
   end
 
   # Other scopes may use custom stacks.
